@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Directories
+bin/
+int/
+.vs/
+
+# Visual Studio
+**.vcxproj*
+*.sln
