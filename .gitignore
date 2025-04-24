@@ -39,3 +39,6 @@ obj/
 # Visual Studio
 **.vcxproj*
 *.sln
+
+# Exceptions
+!ChessInCpp/res/meshes/*.obj
