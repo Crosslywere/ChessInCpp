@@ -79,7 +79,7 @@ workspace "ChessInCpp"
 		targetdir "bin/%{cfg.buildcfg}/%{prj.name}"
 		objdir "obj/%{cfg.buildcfg}/%{prj.name}"
 		files {
-			"%{prj.location}/src/pch.h",
+			"%{prj.location}/src/**.h",
 			"%{prj.location}/src/**.cpp",
 			"%{prj.location}/include/**.h"
 		}
@@ -101,6 +101,7 @@ workspace "ChessInCpp"
 		pchsource "%{prj.location}/src/pch.cpp"
 		filter "configurations:Debug"
 			runtime "Debug"
+			defines "DEBUG"
 			symbols "On"
 		filter "configurations:Release"
 			runtime "Release"
@@ -108,7 +109,6 @@ workspace "ChessInCpp"
 			optimize "On"
 
 	project "ChessInCpp"
-		kind "ConsoleApp"
 		language "C++"
 		cppdialect "C++20"
 		location "ChessInCpp"
@@ -133,8 +133,11 @@ workspace "ChessInCpp"
 		}
 		filter "configurations:Debug"
 			runtime "Debug"
+			defines "DEBUG"
+			kind "ConsoleApp"
 			symbols "On"
 		filter "configurations:Release"
 			runtime "Release"
+			kind "WindowedApp"
 			symbols "Off"
 			optimize "On"
