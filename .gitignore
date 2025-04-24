@@ -33,7 +33,7 @@
 
 # Directories
 bin/
-int/
+obj/
 .vs/
 
 # Visual Studio
