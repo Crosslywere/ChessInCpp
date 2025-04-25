@@ -71,6 +71,7 @@ workspace "ChessInCpp"
 			["Source"] = "**.c"
 		}
 
+	-- My projects start here
 	project "Engine"
 		kind "StaticLib"
 		location "Engine"
@@ -95,6 +96,7 @@ workspace "ChessInCpp"
 			"glfw/include",
 			"glad/include",
 			"glm",
+			"stb",
 			"%{prj.location}/include"
 		}
 		pchheader "pch.h"
@@ -141,3 +143,5 @@ workspace "ChessInCpp"
 			kind "WindowedApp"
 			symbols "Off"
 			optimize "On"
+		filter "system:windows"
+			defines "PLATFORM_WINDOWS"
