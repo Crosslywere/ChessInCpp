@@ -2,9 +2,10 @@
 #include <glad/glad.h>
 #include "Window.h"
 
-static Engine* s_Engine;
+static Engine* s_Engine = nullptr;
+static Input* s_Input = nullptr;
 
-Window::Window(Engine* engine) {
+Window::Window(Engine* engine, Input* input) {
 	if (!glfwInit()) {
 		std::cerr << "Failed to initalize glfw\n";
 		std::exit(EXIT_FAILURE);
@@ -28,16 +29,31 @@ Window::Window(Engine* engine) {
 		cleanup();
 		std::exit(EXIT_FAILURE);
 	}
+	if (engine->m_MinWidth > 0 || engine->m_MinHeight > 0);
+	glfwSetWindowSizeLimits(m_Window, engine->m_MinWidth, engine->m_MinHeight, GLFW_DONT_CARE, GLFW_DONT_CARE);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendEquation(GL_FUNC_ADD);
 	s_Engine = engine;
+	s_Input = input;
 	glfwSetFramebufferSizeCallback(m_Window, [](GLFWwindow* window, int width, int height) {
 		s_Engine->setWidth(width);
 		s_Engine->setHeight(height);
 		s_Engine->onResize();
 		glViewport(0, 0, width, height);
+		});
+	glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods) {
+		s_Input->setButtonPressed(button, action >= GLFW_PRESS);
+		});
+	glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xpos, double ypos) {
+		s_Input->setMousePos(xpos, ypos);
+	});
+	glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
+		s_Input->setKeyPressed(key, action >= GLFW_PRESS);
+	});
+	glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xoffset, double yoffset) {
+		s_Input->setScrollAmount(yoffset);
 	});
 }
 

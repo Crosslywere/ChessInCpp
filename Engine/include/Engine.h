@@ -2,6 +2,7 @@
 
 #include <string>
 #include <cstdint>
+#include <Input.h>
 
 class Engine {
 	friend class Window;
@@ -17,17 +18,20 @@ public:
 	inline const std::string& getTitle() const { return m_Title; }
 	inline void setTitle(const std::string& title) { m_Title = title; }
 
+	inline void setMinWidth(uint32_t width) { m_MinWidth = width; }
+	inline void setMinHeight(uint32_t height) { m_MinHeight = height; }
+
 	inline bool isResizable() const { return m_Resizable; }
 
 protected:
 	virtual void onCreate() = 0;
-	virtual void onUpdate() = 0;
+	virtual void onUpdate(const Input& input) = 0;
 	virtual void onRender() = 0;
 
 	inline virtual void onResize() {}
 	inline virtual void onExit() {}
 
-	inline void close() { m_Running = false; }
+	inline void forceClose() { m_Running = false; }
 private:
 	uint32_t m_Width{};
 	int32_t m_MinWidth{ -1 };
