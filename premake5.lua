@@ -124,14 +124,19 @@ workspace "ChessInCpp"
 		vpaths {
 			["Header"] = "**.h",
 			["Source"] = { "**.c", "**.cpp" },
-			["Resource"] = "res/**"
+			["Resource/Meshes"] = { "**.obj", "**.mtl" },
+			["Resource/Fonts"] = { "**.ttf" }
 		}
 		links {
 			"Engine"
 		}
 		includedirs {
 			"Engine/include",
-			"glm"
+			"glm",
+			"stb"
+		}
+		postbuildcommands {
+			"{COPYDIR} res/ ../bin/%{cfg.buildcfg}/%{prj.name}/res/"
 		}
 		filter "configurations:Debug"
 			runtime "Debug"
